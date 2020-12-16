@@ -11,48 +11,21 @@ class Example(QWidget):
 	
 	def initUI(self):
 		self.setGeometry(600, 250, 700, 500)
-		self.setWindowTitle('Фильтрация по жанрам')
+		self.setWindowTitle('Эспрессо')
 		
 		self.list_w = QTableWidget(self)
-		self.list_w.move(200, 20)
-		self.list_w.resize(480, 450)
+		self.list_w.move(0, 0)
+		self.list_w.resize(690, 500)
 		
-		self.con = sqlite3.connect('films_db.sqlite')
+		self.con = sqlite3.connect('coffee.db')
 		self.cur = self.con.cursor()
-		self.genres = self.cur.execute("""SELECT title FROM genres""")
-		self.genres_list = [i for i in self.genres]
-		self.genres_right = [i[0] for i in self.genres_list]
 		
-		self.button = QPushButton('Пуск', self)
-		self.button.move(30, 70)
-		self.button.resize(90, 50)
-		
-		self.box_list = QComboBox(self)
-		self.box_list.move(5, 30)
-		self.box_list.resize(140, 30)
-		self.box_list.addItems(self.genres_right)
-		
-		self.list_w.setColumnCount(3)
+		self.list_w.setColumnCount(7)
 		self.list_w.setRowCount(0)
-		self.list_w.setHorizontalHeaderLabels(['Название', 'Жанр', 'Год'])
+		self.list_w.setHorizontalHeaderLabels(['coffee_id', 'coffee_grade', 'roasting_degree',
+		'ground_or_grain', 'taste', 'price', 'package_weight'])
 		
-		right_tables = self.cur.execute(f"""SELECT title, genre, year FROM films""").fetchall()
-		for i, row in enumerate(right_tables):
-			self.list_w.setRowCount(
-				self.list_w.rowCount() + 1)
-			for j, elem in enumerate(row):
-				self.list_w.setItem(
-					i, j, QTableWidgetItem(str(elem)))
-		
-		self.button.clicked.connect(self.run)
-	
-	def run(self):
-		current_genre = self.box_list.currentText()
-		right_tables = self.cur.execute(f"""SELECT title, genre, year FROM films
-        WHERE genre=(SELECT id FROM genres WHERE title='{current_genre}')""").fetchall()
-		self.list_w.setColumnCount(3)
-		self.list_w.setRowCount(0)
-		
+		right_tables = self.cur.execute(f"""SELECT * FROM Coffee""").fetchall()
 		for i, row in enumerate(right_tables):
 			self.list_w.setRowCount(
 				self.list_w.rowCount() + 1)
