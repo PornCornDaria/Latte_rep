@@ -13,6 +13,7 @@ class Example(QMainWindow):
 	def __init__(self):
 		super().__init__()
 		uic.loadUi('main.ui', self)
+		self.initUI()
 
 	def initUI(self):
 		self.con = sqlite3.connect('coffee.db')
