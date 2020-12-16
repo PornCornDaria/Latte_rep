@@ -1,22 +1,20 @@
 import sqlite3
+
 import sys
 
-from PyQt5.QtWidgets import *
+import sqlite3
+
+from PyQt5 import uic
+
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 
 
-class Example(QWidget):
+class Example(QMainWindow):
 	def __init__(self):
 		super().__init__()
-		self.initUI()
-	
+		uic.loadUi('main.ui', self)
+
 	def initUI(self):
-		self.setGeometry(600, 250, 700, 500)
-		self.setWindowTitle('Эспрессо')
-		
-		self.list_w = QTableWidget(self)
-		self.list_w.move(0, 0)
-		self.list_w.resize(690, 500)
-		
 		self.con = sqlite3.connect('coffee.db')
 		self.cur = self.con.cursor()
 		
