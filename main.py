@@ -45,7 +45,7 @@ class Form2(QMainWindow, Add_ui):
 		self.initUI()
 		
 	def initUI(self):
-		self.con = sqlite3.connect('coffee.db')
+		self.con = sqlite3.connect('data/coffee.db')
 		self.cur = self.con.cursor()
 		
 		self.pushButton.clicked.connect(self.update_func)
@@ -83,6 +83,7 @@ class Form2(QMainWindow, Add_ui):
 		self.cur.execute(f"""INSERT INTO Coffee(coffee_id, coffee_grade, roasting_degree_id,
 		ground_or_grain, taste, price, package_weight) VALUES({coffee_id}, '{coffee_grade}',
 		{roasting_degree}, '{ground_or_grain}', '{taste}', {price}, {package_weight})""")
+		
 		self.con.commit()
 		
 		self.a = Example()
