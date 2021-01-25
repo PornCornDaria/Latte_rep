@@ -6,15 +6,19 @@ from PyQt5 import uic
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 
+from UI.main import Ui_MainWindow as Main_ui
 
-class Example(QMainWindow):
+from UI.addEditCoffeeForm import Ui_MainWindow as Add_ui
+
+
+class Example(QMainWindow, Main_ui):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi('main.ui', self)
+		self.setupUi(self)
 		self.initUI()
 
 	def initUI(self):
-		self.con = sqlite3.connect('coffee.db')
+		self.con = sqlite3.connect('data/coffee.db')
 		self.cur = self.con.cursor()
 		
 		self.list_w.setColumnCount(7)
@@ -34,10 +38,10 @@ class Example(QMainWindow):
 		self.a.show()
 		
 		
-class Form2(QMainWindow):
+class Form2(QMainWindow, Add_ui):
 	def __init__(self):
 		super().__init__()
-		uic.loadUi('addEditCoffeeForm.ui', self)
+		self.setupUi(self)
 		self.initUI()
 		
 	def initUI(self):
@@ -83,6 +87,7 @@ class Form2(QMainWindow):
 		
 		self.a = Example()
 		self.a.show()
+
 
 if __name__ == '__main__':
 	app = QApplication(sys.argv)
